@@ -1,6 +1,7 @@
 ### Java ###
 
 # Compiled class file
+target/
 *.class
 
 # Log file
@@ -12,7 +13,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.nar
@@ -23,6 +24,9 @@
 
 # Virtual machine crash logs
 hs_err_pid*
+
+# Quarkus
+.env
 
 
 ### IntelliJ ###
@@ -95,7 +99,7 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-# IntelliJ Patch #
+# IntelliJ Patch
 modules.xml
 .idea/misc.xml
 
