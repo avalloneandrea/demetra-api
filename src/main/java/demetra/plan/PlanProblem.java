@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static demetra.domain.Tag.*;
 
@@ -54,24 +55,24 @@ public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Doub
                         Function.identity(),
                         Collectors.counting()));
 
-        double fitness = 0;
-        long vegetables = occurrences.getOrDefault(RedVegetables, 0L)
-                + occurrences.getOrDefault(OrangeVegetables, 0L)
-                + occurrences.getOrDefault(WhiteVegetables, 0L)
-                + occurrences.getOrDefault(GreenVegetables, 0L)
-                + occurrences.getOrDefault(PurpleVegetables, 0L);
-        fitness += percentage(vegetables, 14);
-        fitness += percentage(occurrences.getOrDefault(RedMeat, 0L), 1);
-        fitness += percentage(occurrences.getOrDefault(WhiteMeat, 0L), 2);
-        fitness += percentage(occurrences.getOrDefault(ProcessedMeat, 0L), 1);
-        fitness += percentage(occurrences.getOrDefault(Seafood, 0L), 3);
-        fitness += percentage(occurrences.getOrDefault(Legumes, 0L), 2);
-        fitness += percentage(occurrences.getOrDefault(Dairy, 0L), 1);
+        double fitness = 0D;
         fitness += percentage(occurrences.getOrDefault(Cereals, 0L), 7);
         fitness += percentage(occurrences.getOrDefault(Potatoes, 0L), 2);
+        fitness += percentage(Stream.of(RedFruits, OrangeFruits, WhiteFruits, GreenFruits, PurpleFruits)
+                .map(fruit -> occurrences.getOrDefault(fruit, 0L))
+                .reduce(0L, Long::sum), 14);
+        fitness += percentage(Stream.of(RedVegetables, OrangeVegetables, WhiteVegetables, GreenVegetables, PurpleVegetables)
+                .map(fruit -> occurrences.getOrDefault(fruit, 0L))
+                .reduce(0L, Long::sum), 21);
+        fitness += percentage(occurrences.getOrDefault(WhiteMeat, 0L), 1);
+        fitness += percentage(occurrences.getOrDefault(RedMeat, 0L), 1);
+        fitness += percentage(occurrences.getOrDefault(ProcessedMeat, 0L), 1);
+        fitness += percentage(occurrences.getOrDefault(Seafood, 0L), 3);
         fitness += percentage(occurrences.getOrDefault(Eggs, 0L), 2);
-
+        fitness += percentage(occurrences.getOrDefault(Legumes, 0L), 2);
+        fitness += percentage(occurrences.getOrDefault(Dairy, 0L), 1);
         return fitness;
+
     }
 
     private double percentage(long x, int max) {

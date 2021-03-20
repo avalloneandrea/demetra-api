@@ -20,6 +20,7 @@ public class PlanService {
         PlanProblem problem = PlanProblem.of(recipes, 14);
         return Engine.builder(problem).build().stream()
                 .limit(Limits.bySteadyFitness(10))
+                .limit(Limits.byFixedGeneration(100))
                 .collect(EvolutionResult.toBestPhenotype())
                 .genotype().chromosome().stream()
                 .map(EnumGene::allele)
