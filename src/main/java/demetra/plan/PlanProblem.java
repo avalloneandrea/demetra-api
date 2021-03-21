@@ -16,6 +16,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static demetra.domain.Frequency.ofDaily;
+import static demetra.domain.Frequency.ofWeekly;
 import static demetra.domain.Tag.*;
 
 public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Double> {
@@ -34,7 +36,7 @@ public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Doub
 
     @Override
     public Codec<ISeq<Recipe>, EnumGene<Recipe>> codec() {
-        return Codecs.ofSubSet(population, size);
+        return Codecs.ofSubSet(population, 2 * size);
     }
 
     @Override
@@ -45,7 +47,7 @@ public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Doub
     @Override
     public Double fitness(ISeq<Recipe> recipes) {
 
-        if (Set.copyOf(recipes.asList()).size() != size)
+        if (Set.copyOf(recipes.asList()).size() != recipes.size())
             return 0D;
 
         Map<Tag, Long> occurrences = recipes.stream()
@@ -56,30 +58,31 @@ public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Doub
                         Collectors.counting()));
 
         double fitness = 0D;
-        fitness += percentage(occurrences.getOrDefault(Cereals, 0L), 7);
-        fitness += percentage(occurrences.getOrDefault(Potatoes, 0L), 2);
-        fitness += percentage(Stream.of(RedFruits, OrangeFruits, WhiteFruits, GreenFruits, PurpleFruits)
+        fitness += cusp(occurrences.getOrDefault(Cereals, 0L), ofDaily(1, size));
+        fitness += cusp(occurrences.getOrDefault(Potatoes, 0L), ofWeekly(2, size));
+        fitness += cusp(Stream.of(RedFruits, OrangeFruits, WhiteFruits, GreenFruits, PurpleFruits)
                 .map(fruit -> occurrences.getOrDefault(fruit, 0L))
-                .reduce(0L, Long::sum), 14);
-        fitness += percentage(Stream.of(RedVegetables, OrangeVegetables, WhiteVegetables, GreenVegetables, PurpleVegetables)
+                .reduce(0L, Long::sum), ofDaily(2.5, size));
+        fitness += cusp(Stream.of(RedVegetables, OrangeVegetables, WhiteVegetables, GreenVegetables, PurpleVegetables)
                 .map(fruit -> occurrences.getOrDefault(fruit, 0L))
-                .reduce(0L, Long::sum), 21);
-        fitness += percentage(occurrences.getOrDefault(WhiteMeat, 0L), 1);
-        fitness += percentage(occurrences.getOrDefault(RedMeat, 0L), 1);
-        fitness += percentage(occurrences.getOrDefault(ProcessedMeat, 0L), 1);
-        fitness += percentage(occurrences.getOrDefault(Seafood, 0L), 3);
-        fitness += percentage(occurrences.getOrDefault(Eggs, 0L), 2);
-        fitness += percentage(occurrences.getOrDefault(Legumes, 0L), 2);
-        fitness += percentage(occurrences.getOrDefault(Dairy, 0L), 1);
+                .reduce(0L, Long::sum), ofDaily(2.5, size));
+        fitness += cusp(occurrences.getOrDefault(WhiteMeat, 0L), ofWeekly(2, size));
+        fitness += cusp(occurrences.getOrDefault(RedMeat, 0L), ofWeekly(1, size));
+        fitness += cusp(occurrences.getOrDefault(ProcessedMeat, 0L), ofWeekly(1, size));
+        fitness += cusp(occurrences.getOrDefault(Seafood, 0L), ofWeekly(3, size));
+        fitness += cusp(occurrences.getOrDefault(Eggs, 0L), ofWeekly(1.5, size));
+        fitness += cusp(occurrences.getOrDefault(Legumes, 0L), ofWeekly(1.5, size));
+        fitness += cusp(occurrences.getOrDefault(Dairy, 0L), ofWeekly(1, size));
         return fitness;
 
     }
 
-    private double percentage(long x, int max) {
-        if (x <= max)
-            return ((double) x) / ((double) max);
-        else
-            return ((double) max - x) / ((double) max);
+    private double cusp(double amount, double target) {
+        if (amount <= target)
+            return amount / target;
+        else if (amount >= 2 * target)
+            return 0d;
+        return 1 - amount % target / target;
     }
 
 }
