@@ -71,7 +71,7 @@ public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Doub
         fitness += cusp(occurrences.getOrDefault(ProcessedMeat, 0L), ofWeekly(1, size));
         fitness += cusp(occurrences.getOrDefault(Seafood, 0L), ofWeekly(3, size));
         fitness += cusp(occurrences.getOrDefault(Eggs, 0L), ofWeekly(1.5, size));
-        fitness += cusp(occurrences.getOrDefault(Legumes, 0L), ofWeekly(1.5, size));
+        fitness += cusp(occurrences.getOrDefault(Legumes, 0L), ofWeekly(2, size));
         fitness += cusp(occurrences.getOrDefault(Dairy, 0L), ofWeekly(1, size));
         return fitness;
 
