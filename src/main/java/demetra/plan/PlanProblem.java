@@ -51,7 +51,7 @@ public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Doub
             return 0D;
 
         Map<Tag, Long> occurrences = recipes.stream()
-                .map(Recipe::getTags)
+                .map(recipe -> recipe.tags)
                 .flatMap(Collection::stream)
                 .collect(Collectors.groupingBy(
                         Function.identity(),
