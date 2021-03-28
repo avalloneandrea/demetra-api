@@ -3,20 +3,23 @@ package demetra.domain;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Data
 @Entity
 @Table(name = "recipe_ingredient")
 public class RecipeIngredient extends PanacheEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Recipe recipe;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Ingredient ingredient;
 
-    @Column
+    @Column(nullable = false)
     private int quantity;
 
 }

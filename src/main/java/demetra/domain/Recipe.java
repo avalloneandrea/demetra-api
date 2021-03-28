@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 public class Recipe extends PanacheEntity {
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @ElementCollection

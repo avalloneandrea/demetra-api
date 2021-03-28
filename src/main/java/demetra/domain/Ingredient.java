@@ -10,10 +10,10 @@ import javax.persistence.Entity;
 @Entity
 public class Ingredient extends PanacheEntity {
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String unit;
 
 }
