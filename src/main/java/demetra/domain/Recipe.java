@@ -18,4 +18,7 @@ public class Recipe extends PanacheEntity {
     @Enumerated(EnumType.STRING)
     private Set<Tag> tags = new HashSet<>();
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
+
 }
