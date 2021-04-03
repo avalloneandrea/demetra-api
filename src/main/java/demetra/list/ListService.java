@@ -1,6 +1,6 @@
 package demetra.list;
 
-import demetra.domain.ListIngredient;
+import demetra.domain.NecessaryIngredient;
 import demetra.domain.Recipe;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class ListService {
 
-    public List<ListIngredient> getList(List<Long> recipes) {
+    public List<NecessaryIngredient> getList(List<Long> recipes) {
         return recipes.stream()
                 .map(id -> Recipe.<Recipe>findById(id))
                 .map(recipe -> recipe.recipeIngredients)
@@ -20,7 +20,7 @@ public class ListService {
                         ri -> ri.ingredient,
                         Collectors.summingInt(ri -> ri.quantity)))
                 .entrySet().stream()
-                .map(ListIngredient::from)
+                .map(NecessaryIngredient::from)
                 .collect(Collectors.toList());
     }
 

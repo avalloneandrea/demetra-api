@@ -1,6 +1,6 @@
 package demetra.list;
 
-import demetra.domain.ListIngredient;
+import demetra.domain.NecessaryIngredient;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/list")
-@Tag(name = "List Resource", description = "Operations about shopping lists")
+@Tag(name = "ListResource", description = "Operations about shopping lists")
 public class ListResource {
 
     @Inject
@@ -23,7 +23,7 @@ public class ListResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Build a shopping list given the recipes to make")
-    public List<ListIngredient> getList(@Parameter(description = "Recipes to make") @QueryParam("recipes") List<Long> recipes) {
+    public List<NecessaryIngredient> getList(@Parameter(description = "Recipes to make") @QueryParam("recipes") List<Long> recipes) {
         return service.getList(recipes);
     }
 

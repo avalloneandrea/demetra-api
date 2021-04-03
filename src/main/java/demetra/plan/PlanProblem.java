@@ -22,21 +22,23 @@ import static demetra.domain.Tag.*;
 
 public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Double> {
 
-    private final ISeq<Recipe> population;
-    private final int size;
+    private static final int RecipesPerDay = 2;
 
-    public static PlanProblem of(final List<Recipe> population, final int size) {
-        return new PlanProblem(ISeq.of(population), size);
+    private final ISeq<Recipe> recipes;
+    private final int days;
+
+    public static PlanProblem of(final List<Recipe> recipes, final int days) {
+        return new PlanProblem(ISeq.of(recipes), days);
     }
 
-    public PlanProblem(final ISeq<Recipe> population, final int size) {
-        this.population = population;
-        this.size = size;
+    public PlanProblem(final ISeq<Recipe> recipes, final int days) {
+        this.recipes = recipes;
+        this.days = days;
     }
 
     @Override
     public Codec<ISeq<Recipe>, EnumGene<Recipe>> codec() {
-        return Codecs.ofSubSet(population, 2 * size);
+        return Codecs.ofSubSet(recipes, days * RecipesPerDay);
     }
 
     @Override
@@ -57,21 +59,21 @@ public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Doub
                         Function.identity(),
                         Collectors.counting()));
 
-        return offset(occurrences.getOrDefault(Cereals, 0L), ofDaily(1, size))
-                + offset(occurrences.getOrDefault(Potatoes, 0L), ofWeekly(2, size))
+        return offset(occurrences.getOrDefault(Cereals, 0L), ofDaily(1, days))
+                + offset(occurrences.getOrDefault(Potatoes, 0L), ofWeekly(2, days))
                 + offset(Stream.of(RedFruits, OrangeFruits, WhiteFruits, GreenFruits, PurpleFruits)
                 .map(fruit -> occurrences.getOrDefault(fruit, 0L))
-                .reduce(0L, Long::sum), ofDaily(2.5, size))
+                .reduce(0L, Long::sum), ofDaily(2.5, days))
                 + offset(Stream.of(RedVegetables, OrangeVegetables, WhiteVegetables, GreenVegetables, PurpleVegetables)
                 .map(vegetable -> occurrences.getOrDefault(vegetable, 0L))
-                .reduce(0L, Long::sum), ofDaily(2.5, size))
-                + offset(occurrences.getOrDefault(WhiteMeat, 0L), ofWeekly(2, size))
-                + offset(occurrences.getOrDefault(RedMeat, 0L), ofWeekly(1, size))
-                + offset(occurrences.getOrDefault(ProcessedMeat, 0L), ofWeekly(0.5, size))
-                + offset(occurrences.getOrDefault(Seafood, 0L), ofWeekly(3, size))
-                + offset(occurrences.getOrDefault(Eggs, 0L), ofWeekly(1.5, size))
-                + offset(occurrences.getOrDefault(Legumes, 0L), ofWeekly(2, size))
-                + offset(occurrences.getOrDefault(Dairy, 0L), ofWeekly(1, size));
+                .reduce(0L, Long::sum), ofDaily(2.5, days))
+                + offset(occurrences.getOrDefault(WhiteMeat, 0L), ofWeekly(2, days))
+                + offset(occurrences.getOrDefault(RedMeat, 0L), ofWeekly(1, days))
+                + offset(occurrences.getOrDefault(ProcessedMeat, 0L), ofWeekly(1, days))
+                + offset(occurrences.getOrDefault(Seafood, 0L), ofWeekly(3, days))
+                + offset(occurrences.getOrDefault(Eggs, 0L), ofWeekly(3, days))
+                + offset(occurrences.getOrDefault(Legumes, 0L), ofWeekly(2, days))
+                + offset(occurrences.getOrDefault(Dairy, 0L), ofWeekly(1, days));
 
     }
 

@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/plan")
-@Tag(name = "Plan Resource", description = "Operations about meal plans")
+@Tag(name = "PlanResource", description = "Operations about meal plans")
 public class PlanResource {
 
     @Inject
