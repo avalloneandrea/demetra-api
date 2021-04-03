@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class ListService {
 
-    public List<ListIngredient> getList(List<Recipe> recipes) {
+    public List<ListIngredient> getList(List<Long> recipes) {
         return recipes.stream()
-                .map(recipe -> Recipe.<Recipe>findById(recipe.id))
+                .map(id -> Recipe.<Recipe>findById(id))
                 .map(recipe -> recipe.recipeIngredients)
                 .flatMap(Collection::stream)
                 .collect(Collectors.groupingBy(
