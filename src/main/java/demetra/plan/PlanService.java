@@ -16,7 +16,7 @@ public class PlanService {
     public List<Recipe> getPlan(int days) {
         List<Recipe> recipes = Recipe.listAll();
         PlanProblem problem = PlanProblem.of(recipes, days);
-        return Engine.builder(problem).build().stream()
+        return Engine.builder(problem).minimizing().build().stream()
                 .limit(Limits.bySteadyFitness(10))
                 .limit(Limits.byFixedGeneration(100))
                 .collect(EvolutionResult.toBestPhenotype())

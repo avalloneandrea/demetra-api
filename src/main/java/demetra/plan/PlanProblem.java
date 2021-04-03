@@ -57,32 +57,26 @@ public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Doub
                         Function.identity(),
                         Collectors.counting()));
 
-        double fitness = 0D;
-        fitness += cusp(occurrences.getOrDefault(Cereals, 0L), ofDaily(1, size));
-        fitness += cusp(occurrences.getOrDefault(Potatoes, 0L), ofWeekly(2, size));
-        fitness += cusp(Stream.of(RedFruits, OrangeFruits, WhiteFruits, GreenFruits, PurpleFruits)
+        return offset(occurrences.getOrDefault(Cereals, 0L), ofDaily(1, size))
+                + offset(occurrences.getOrDefault(Potatoes, 0L), ofWeekly(2, size))
+                + offset(Stream.of(RedFruits, OrangeFruits, WhiteFruits, GreenFruits, PurpleFruits)
                 .map(fruit -> occurrences.getOrDefault(fruit, 0L))
-                .reduce(0L, Long::sum), ofDaily(2.5, size));
-        fitness += cusp(Stream.of(RedVegetables, OrangeVegetables, WhiteVegetables, GreenVegetables, PurpleVegetables)
-                .map(fruit -> occurrences.getOrDefault(fruit, 0L))
-                .reduce(0L, Long::sum), ofDaily(2.5, size));
-        fitness += cusp(occurrences.getOrDefault(WhiteMeat, 0L), ofWeekly(2, size));
-        fitness += cusp(occurrences.getOrDefault(RedMeat, 0L), ofWeekly(1, size));
-        fitness += cusp(occurrences.getOrDefault(ProcessedMeat, 0L), ofWeekly(1, size));
-        fitness += cusp(occurrences.getOrDefault(Seafood, 0L), ofWeekly(3, size));
-        fitness += cusp(occurrences.getOrDefault(Eggs, 0L), ofWeekly(1.5, size));
-        fitness += cusp(occurrences.getOrDefault(Legumes, 0L), ofWeekly(2, size));
-        fitness += cusp(occurrences.getOrDefault(Dairy, 0L), ofWeekly(1, size));
-        return fitness;
+                .reduce(0L, Long::sum), ofDaily(2.5, size))
+                + offset(Stream.of(RedVegetables, OrangeVegetables, WhiteVegetables, GreenVegetables, PurpleVegetables)
+                .map(vegetable -> occurrences.getOrDefault(vegetable, 0L))
+                .reduce(0L, Long::sum), ofDaily(2.5, size))
+                + offset(occurrences.getOrDefault(WhiteMeat, 0L), ofWeekly(2, size))
+                + offset(occurrences.getOrDefault(RedMeat, 0L), ofWeekly(1, size))
+                + offset(occurrences.getOrDefault(ProcessedMeat, 0L), ofWeekly(0.5, size))
+                + offset(occurrences.getOrDefault(Seafood, 0L), ofWeekly(3, size))
+                + offset(occurrences.getOrDefault(Eggs, 0L), ofWeekly(1.5, size))
+                + offset(occurrences.getOrDefault(Legumes, 0L), ofWeekly(2, size))
+                + offset(occurrences.getOrDefault(Dairy, 0L), ofWeekly(1, size));
 
     }
 
-    private double cusp(double amount, double target) {
-        if (amount <= target)
-            return amount / target;
-        else if (amount >= 2 * target)
-            return 0d;
-        return 1 - amount % target / target;
+    private double offset(double amount, double target) {
+        return Math.abs(amount - target);
     }
 
 }
