@@ -13,7 +13,7 @@ public class NecessaryIngredient {
     }
 
     public String name;
-    public String unit;
+    public Unit unit;
     public int quantity;
 
 }
