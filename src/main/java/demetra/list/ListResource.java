@@ -13,7 +13,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/list")
+@Path("list")
 @Tag(name = "ListResource", description = "Operations about shopping lists")
 public class ListResource {
 

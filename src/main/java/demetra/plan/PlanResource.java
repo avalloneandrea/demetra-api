@@ -10,7 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/plan")
+@Path("plan")
 @Tag(name = "PlanResource", description = "Operations about meal plans")
 public class PlanResource {
 
