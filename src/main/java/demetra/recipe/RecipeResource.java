@@ -21,8 +21,8 @@ public class RecipeResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "List all the available recipes")
-    public List<Recipe> list() {
-        return service.list();
+    public List<Recipe> listAll() {
+        return service.listAll();
     }
 
 }

@@ -1,6 +1,5 @@
 package demetra.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.persistence.*;
@@ -17,8 +16,7 @@ public class Recipe extends PanacheEntity {
     @Enumerated(EnumType.STRING)
     public Set<Tag> tags = new HashSet<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
-    public Set<RecipeIngredient> recipeIngredients = new HashSet<>();
+    public Set<RecipeIngredient> ingredients = new HashSet<>();
 
 }

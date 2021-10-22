@@ -8,7 +8,7 @@ import java.util.List;
 @ApplicationScoped
 public class RecipeService {
 
-    public List<Recipe> list() {
+    public List<Recipe> listAll() {
         return Recipe.listAll();
     }
 
