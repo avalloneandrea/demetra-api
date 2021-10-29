@@ -2,12 +2,11 @@ package demetra.recipe;
 
 import demetra.domain.Recipe;
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -21,8 +20,8 @@ public class RecipeResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "List all the available recipes")
-    public List<Recipe> listAll() {
-        return service.listAll();
+    public List<Recipe> listAll(@Parameter(description = "Query to filter results") @QueryParam("query") String query) {
+        return service.listAll(query);
     }
 
 }
