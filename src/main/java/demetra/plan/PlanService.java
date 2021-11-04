@@ -9,6 +9,7 @@ import io.jenetics.engine.Limits;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -18,6 +19,7 @@ public class PlanService {
         List<Recipe> recipes = Recipe.listAll();
         PlanProblem problem = PlanProblem.of(recipes, days);
         Engine<EnumGene<Recipe>, Double> engine = Engine.builder(problem)
+                .executor(Executors.newSingleThreadExecutor())
                 .minimizing()
                 .build();
         Phenotype<EnumGene<Recipe>, Double> result = engine.stream()
