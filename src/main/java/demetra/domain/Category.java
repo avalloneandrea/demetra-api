@@ -1,6 +1,6 @@
 package demetra.domain;
 
-public enum Tag {
+public enum Category {
 
     Cereals,
     Potatoes,
@@ -21,5 +21,8 @@ public enum Tag {
     Eggs,
     Legumes,
     Dairy,
+    Seeds,
+    Spices,
+    Misc,
 
 }

@@ -13,6 +13,9 @@ public class Ingredient extends PanacheEntity {
     @Column(nullable = false)
     public String name;
 
+    @Enumerated(EnumType.STRING)
+    public Category category;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     public Unit unit = Unit.g;

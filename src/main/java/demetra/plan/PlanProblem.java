@@ -1,7 +1,7 @@
 package demetra.plan;
 
+import demetra.domain.Category;
 import demetra.domain.Recipe;
-import demetra.domain.Tag;
 import io.jenetics.EnumGene;
 import io.jenetics.engine.Codec;
 import io.jenetics.engine.Codecs;
@@ -16,9 +16,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static demetra.domain.Category.*;
 import static demetra.domain.Frequency.ofDaily;
 import static demetra.domain.Frequency.ofWeekly;
-import static demetra.domain.Tag.*;
 
 public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Double> {
 
@@ -52,8 +52,8 @@ public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Doub
         if (Set.copyOf(recipes.asList()).size() != recipes.size())
             return 0D;
 
-        Map<Tag, Long> occurrences = recipes.stream()
-                .map(recipe -> recipe.tags)
+        Map<Category, Long> occurrences = recipes.stream()
+                .map(Recipe::getCategories)
                 .flatMap(Collection::stream)
                 .collect(Collectors.groupingBy(
                         Function.identity(),
