@@ -20,7 +20,7 @@ public class Recipe extends PanacheEntity {
     public String reference;
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<RecipeIngredient> ingredients = List.of();
+    public List<RecipeIngredient> ingredients;
 
     public Set<Category> getCategories() {
         return ingredients.stream()

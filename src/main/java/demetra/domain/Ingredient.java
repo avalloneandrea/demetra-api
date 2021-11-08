@@ -13,6 +13,7 @@ public class Ingredient extends PanacheEntity {
     @Column(nullable = false)
     public String name;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     public Category category;
 
