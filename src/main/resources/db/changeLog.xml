@@ -2810,4 +2810,20 @@
         </insert>
     </changeSet>
 
+    <changeSet id="48" author="demetra">
+        <update tableName="recipeingredient">
+            <column name="quantity" value="85"/>
+            <where>id = 319</where>
+        </update>
+        <delete tableName="recipeingredient">
+            <where>id = 327</where>
+        </delete>
+    </changeSet>
+
+    <changeSet id="49" author="demetra">
+        <delete tableName="recipeingredient">
+            <where>id = 409</where>
+        </delete>
+    </changeSet>
+
 </databaseChangeLog>
