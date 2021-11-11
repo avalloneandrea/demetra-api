@@ -8,7 +8,7 @@ import java.util.List;
 @ApplicationScoped
 public class RecipeService {
 
-    public List<Recipe> listAll(String query) {
+    public List<Recipe> list(String query) {
         String pattern = "%" + query.toLowerCase() + "%";
         return Recipe.list("lower(name) like ?1", pattern);
     }
