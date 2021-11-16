@@ -23,8 +23,8 @@ public class PlanService {
                 .minimizing()
                 .build();
         Phenotype<EnumGene<Recipe>, Double> result = engine.stream()
-                .limit(Limits.bySteadyFitness(3))
-                .limit(Limits.byFixedGeneration(10))
+                .limit(Limits.bySteadyFitness(10))
+                .limit(Limits.byFixedGeneration(100))
                 .collect(EvolutionResult.toBestPhenotype());
         return result.genotype().chromosome().stream()
                 .map(EnumGene::allele)

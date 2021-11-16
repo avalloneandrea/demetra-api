@@ -61,17 +61,13 @@ public class PlanProblem implements Problem<ISeq<Recipe>, EnumGene<Recipe>, Doub
 
         return offset(occurrences.getOrDefault(Cereals, 0L), ofDaily(1, days))
                 + offset(occurrences.getOrDefault(Potatoes, 0L), ofWeekly(2, days))
-                + offset(Stream.of(RedFruits, OrangeFruits, WhiteFruits, GreenFruits, PurpleFruits)
-                .map(fruit -> occurrences.getOrDefault(fruit, 0L))
-                .reduce(0L, Long::sum), ofDaily(2, days))
-                + offset(Stream.of(RedVegetables, OrangeVegetables, WhiteVegetables, GreenVegetables, PurpleVegetables)
-                .map(vegetable -> occurrences.getOrDefault(vegetable, 0L))
-                .reduce(0L, Long::sum), ofDaily(3, days))
+                + offset(Stream.of(RedFruits, OrangeFruits, WhiteFruits, GreenFruits, PurpleFruits).map(fruit -> occurrences.getOrDefault(fruit, 0L)).reduce(0L, Long::sum), ofDaily(2, days))
+                + offset(Stream.of(RedVegetables, OrangeVegetables, WhiteVegetables, GreenVegetables, PurpleVegetables).map(vegetable -> occurrences.getOrDefault(vegetable, 0L)).reduce(0L, Long::sum), ofDaily(3, days))
                 + offset(occurrences.getOrDefault(WhiteMeat, 0L), ofWeekly(2, days))
                 + offset(occurrences.getOrDefault(RedMeat, 0L), ofWeekly(1, days))
                 + offset(occurrences.getOrDefault(ProcessedMeat, 0L), ofWeekly(1, days))
-                + offset(occurrences.getOrDefault(Seafood, 0L), ofWeekly(3, days))
-                + offset(occurrences.getOrDefault(Eggs, 0L), ofWeekly(3, days))
+                + offset(occurrences.getOrDefault(Seafood, 0L), ofWeekly(4, days))
+                + offset(occurrences.getOrDefault(Eggs, 0L), ofWeekly(2, days))
                 + offset(occurrences.getOrDefault(Legumes, 0L), ofWeekly(2, days))
                 + offset(occurrences.getOrDefault(Dairy, 0L), ofWeekly(1, days));
 
