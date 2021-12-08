@@ -2826,4 +2826,15 @@
         </delete>
     </changeSet>
 
+    <changeSet id="50" author="demetra">
+        <createTable tableName="account">
+            <column name="amazonid" type="varchar(255)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="alexaid" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>
