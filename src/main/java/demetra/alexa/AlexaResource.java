@@ -39,7 +39,7 @@ public class AlexaResource {
     @Operation(summary = "Add items in the default shopping list given the recipes to make")
     public Response addItems(
             @Parameter(description = "Owner of the shopping list") @FormParam("accountId") String accountId,
-            @Parameter(description = "Recipes to make") @FormParam("recipes") List<Long> recipes)
+            @Parameter(description = "Recipes to make", style = ParameterStyle.FORM, explode = Explode.TRUE) @FormParam("recipes") List<Long> recipes)
             throws IOException, InterruptedException {
         return service.addItems(accountId, recipes);
     }
